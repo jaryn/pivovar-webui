@@ -10,9 +10,6 @@
           handle=".handle"
           ghost-class="ghost"
         >
-          <WashMachinePhase v-bind:key=phase_name v-for="phase_name in phases" :wm_id="wm_name" :phase_name="phase_name"></WashMachinePhase>
-        </div>
-        <!--
         <draggable
           id="phases"
           tag="ol"
@@ -24,7 +21,7 @@
         >
           <WashMachinePhase v-bind:key=phase_name v-for="phase_name in phases" :wm_id="wm_name" :phase_name="phase_name"></WashMachinePhase>
         </draggable>
-        -->
+        </div>
       </div>
       <div class="col-sm-9">
         <h3>{{ $t("Water temperature in time") }}</h3>
@@ -36,6 +33,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import WashMachinePhase from '@/components/WashMachinePhase.vue';
+import draggable from 'vuedraggable'
 
 declare function update_temp_log(wash_machine_id: string, temp_log: any): void;
 declare var pivovar_state: any;
@@ -44,7 +42,8 @@ window.wm_components = []
 
 @Component({
     components: {
-        WashMachinePhase
+        WashMachinePhase,
+        draggable
     }
 })
 export default class WashMachine extends Vue {
@@ -53,14 +52,16 @@ export default class WashMachine extends Vue {
         window.wm_components.push(this)
     }
 
+    data () {
+        return {
+            phases: this.wash_machine.phases
+        }
+    }
+
     @Prop() private wash_machine!: any;
 
     get wm_name() {
         return this.wash_machine.name
-    }
-
-    get phases() {
-        return this.wash_machine.phases
     }
 
     get plot_id() {
