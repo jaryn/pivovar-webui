@@ -11,11 +11,16 @@
               <span class="icon-bar"></span>
             </button>
 
-            <a class="navbar-brand" href="#">{{ "Brewery" }}</a>
+            <a class="navbar-brand" href="#">{{ $t("Brewery") }}</a>
           </div>
           <ul class="nav navbar-nav">
-            <router-link active-class="active" class="nav-item" to="/wash_machines" tag="li"><a>{{ "Wash machines" }}</a></router-link>
-            <router-link active-class="active" class="nav-item" to="/about" tag="li"><a>{{ "About" }}</a></router-link>
+            <router-link active-class="active" class="nav-item" to="/wash_machines" tag="li"><a>{{ $t("Wash machines") }}</a></router-link>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <router-link active-class="active" class="nav-item" to="/about" tag="li"><a>{{ $t("About") }}</a></router-link>
+            <li class="nav-item">
+              <Locale  class="form-control"/>
+            </li>
           </ul>
         </div>
       </nav>
@@ -39,6 +44,7 @@
 
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
+import Locale from '@/components/Locale.vue';
 
 declare function update_data(): void;
 var pivovar_state: any;
@@ -50,7 +56,10 @@ declare global {
     }
 }
 
-@Component
+@Component({
+    components: {
+        Locale
+    }})
 export default class App extends Vue {
   data() {
       return { alerts: {} }

@@ -1,8 +1,8 @@
 <template>
     <div class="wash-machine" v-bind:id="wm_name" >
-      <h3>{{ `Keg Washer ${wm_name}` }}</h3>
+        <h3>{{ $t("Keg washer", { wm_name }) }}</h3>
       <div class="col-sm-3">
-        <h3>{{ "Phases" }}</h3>
+        <h3>{{ $t("Phases") }}</h3>
         <div
           id="phases"
           tag="ol"
@@ -27,7 +27,7 @@
         -->
       </div>
       <div class="col-sm-9">
-        <h3>{{ "water temp in time" }}</h3>
+        <h3>{{ $t("Water temperature in time") }}</h3>
         <div v-bind:id="plot_id" />
       </div>
     </div>
