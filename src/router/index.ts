@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import WashMachines from '../views/WashMachines.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'home',
-    component: Home
+    path: '/wash_machines',
+    name: 'wash machines',
+    component: WashMachines
   },
   {
     path: '/about',

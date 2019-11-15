@@ -1,0 +1,9 @@
+.handle {
+    padding-right: .5em;
+    float: left;
+}
+
+.ghost {
+    opacity: 0.5;
+    background: #c8ebfb;
+}
