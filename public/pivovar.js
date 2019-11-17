@@ -1,18 +1,10 @@
-const wm_url = `http://${location.hostname}:5001`;
-
 var pivovar_state = {
+    wm_url: `http://${location.hostname}:5001`,
+
     wash_machines_names: [ 'wash_machine_1' ],
     wash_machines: {},
 
     alerts: {
-        foo: {
-            danger: true,
-            message: "HEllo",
-        },
-        bar: {
-            danger: true,
-            message: "HEllo",
-        }
     },
 
     updateWashMachine(wm_id, new_state) {
@@ -24,23 +16,37 @@ var pivovar_state = {
     updateWashMachineTempLog(wm_id, new_state) {
         wm = this.wash_machines[wm_id] || {}
         Vue.set(wm, 'plot_data', new_state);
+    },
+
+    addDanger(id, message) {
+        Vue.set(this.alerts, id, {
+            danger: true,
+            message
+        })
+    },
+
+    removeDanger(id) {
+        Vue.delete(this.alerts, id)
     }
 };
 
-fetch(wm_url + '/wash_machine')
+fetch(pivovar_state.wm_url + '/wash_machine')
     .then(response => response.json())
-    .catch(error => console.error('Error:', error))
+    .catch(error => pivovar_state.addDanger('wm_connect', error))
     .then(response => {
+        pivovar_state.removeDanger("wm_connect")
         pivovar_state.updateWashMachine(response.name, response);
     }
 );
 
 function update_data() {
     pivovar_state.wash_machines_names.forEach(wash_machine_id => {
-        $.getJSON(wm_url + '/temp_log', function (temp_log) {
+        url = `${pivovar_state.wm_url}/temp_log`
+        $.getJSON(url, function (temp_log) {
+            pivovar_state.removeDanger("wm_temp_log");
             pivovar_state.updateWashMachineTempLog(wash_machine_id, temp_log);
         }).fail(function() {
-            console.error(`Pivovar: Error getting the ${wash_machine_id} temp_log.`);
+            pivovar_state.addDanger("wm_temp_log", `Error getting ${url}`)
         });
     });
 }

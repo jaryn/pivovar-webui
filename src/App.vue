@@ -24,19 +24,7 @@
           </ul>
         </div>
       </nav>
-
-      <div id="notify_area">
-        <div
-          class="alert"
-          role="alert"
-          v-for="(value, key) in alerts"
-          v-bind:key=key
-          v-bind:class="{ 'alert-danger': value.danger }"
-          :id=key
-        >
-          {{ value.message }}
-        </div>
-      </div>
+      <NotifyArea/>
       <router-view></router-view>
     </div>
   </div>
@@ -45,6 +33,7 @@
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import Locale from '@/components/Locale.vue';
+import NotifyArea from '@/components/NotifyArea.vue';
 
 declare function update_data(): void;
 var pivovar_state: any;
@@ -58,13 +47,10 @@ declare global {
 
 @Component({
     components: {
-        Locale
+        Locale,
+        NotifyArea
     }})
 export default class App extends Vue {
-  data() {
-      return { alerts: {} }
-  }
-
   mounted() {
     window.Vue = Vue
     window.setInterval(update_data, 2000);
