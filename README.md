@@ -1,4 +1,5 @@
-# pivovar-wash-web
+# pivovar-webui
+Web UI for the Pivovar
 
 ## Project setup
 ```
