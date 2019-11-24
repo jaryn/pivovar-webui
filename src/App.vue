@@ -31,12 +31,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
-import Locale from '@/components/Locale.vue';
-import NotifyArea from '@/components/NotifyArea.vue';
-
-declare function update_data(): void;
-var pivovar_state: any;
+import { Component, Prop, Watch, Vue } from 'vue-property-decorator'
+import Locale from '@/components/Locale.vue'
+import NotifyArea from '@/components/NotifyArea.vue'
+import { update_data } from '@/pivovar_state'
 
 declare global {
     interface Window {

@@ -9,8 +9,8 @@
 <script lang="ts">
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import WashMachine from '@/components/WashMachine.vue'
+import { pivovar_state } from '@/pivovar_state'
 
-declare var pivovar_state: any;
 
 @Component({
     components: {
