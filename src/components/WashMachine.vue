@@ -35,7 +35,6 @@ import { TempLog, pivovar_state } from '@/pivovar_state'
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import WashMachinePhase from '@/components/WashMachinePhase.vue';
 import draggable from 'vuedraggable'
-var Plotly = require('plotly.js-dist')
 
 window.wm_components = []
 
@@ -73,26 +72,30 @@ export default class WashMachine extends Vue {
 
     @Watch('plot_data', { immediate: false, deep: true })
     onPlotDataChanged(value: TempLog, oldValue: TempLog) {
-        var temp_log = value
-        const data = [{
-            x: temp_log.datetime,
-            y: temp_log.temps,
-            mode: 'lines+markers',
-            name: '{templota}',
-            line: {'shape': 'spline'},
-            type: 'scatter'
-        }];
-
-        const layout = {
-        legend: {
-            y: 0.5,
-            traceorder: 'reversed',
-            font: {size: 16},
-            yref: 'paper'
-        }};
-        Plotly.react(this.plot_id, data, layout);
+        update_plot(this.plot_id, value)
     }
 
+}
+
+var Plotly = require('plotly.js-dist')
+export function update_plot(plot_id: string, temp_log: TempLog) {
+    const data = [{
+        x: temp_log.datetime,
+        y: temp_log.temps,
+        mode: 'lines+markers',
+        name: '{templota}',
+        line: {'shape': 'spline'},
+        type: 'scatter'
+    }];
+
+    const layout = {
+    legend: {
+        y: 0.5,
+        traceorder: 'reversed',
+        font: {size: 16},
+        yref: 'paper'
+    }};
+    Plotly.react(plot_id, data, layout);
 }
 </script>
 

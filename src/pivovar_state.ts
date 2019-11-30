@@ -45,7 +45,6 @@ export interface TempLog {
 
 export var pivovar_state = new PivovarState()
 
-
 fetch(pivovar_state.wm_url + '/wash_machine')
     .then(response => response.json())
     .catch(error => pivovar_state.addDanger('wm_connect', error))
@@ -69,3 +68,4 @@ export function update_data() {
         })
     })
 }
+
