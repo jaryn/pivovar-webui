@@ -4,6 +4,7 @@ export interface WashMachine {
     name: string
     phases: [ string ]
     plot_data: TempLog
+    required_water_temp: number
 }
 
 export interface TempLog {

@@ -1,7 +1,9 @@
 <template>
     <div class="wash-machine" v-bind:id="wm_name" >
-        <h3>{{ $t("Keg washer", { wm_name }) }}</h3>
+      <h3>{{ $t("Keg washer", { wm_name }) }}</h3>
       <div class="col-sm-3">
+        <!-- TODO Localize the units -->
+        {{ $t("Required water temperature") }} {{ required_water_temp }}: °C
         <h3>{{ $t("Phases") }}</h3>
         <div
           id="phases"
@@ -47,7 +49,8 @@ export default class WashMachine extends Vue {
 
     data () {
         return {
-            phases: this.wash_machine.phases
+            phases: this.wash_machine.phases,
+            required_water_temp: this.wash_machine.required_water_temp
         }
     }
 
