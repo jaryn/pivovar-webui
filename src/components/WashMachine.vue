@@ -32,7 +32,7 @@
 
 <script lang="ts">
 import { pivovar_state } from '@/pivovar_state'
-import { TempLog } from '@/pivovar_client'
+import { TempLog, WashMachine as _WashMachine} from '@/pivovar_client'
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import WashMachinePhase from '@/components/WashMachinePhase.vue';
 import draggable from 'vuedraggable'
@@ -51,7 +51,7 @@ export default class WashMachine extends Vue {
         }
     }
 
-    @Prop() private wash_machine!: any;
+    @Prop() private wash_machine!: _WashMachine;
 
     get wm_name() {
         return this.wash_machine.name

@@ -2,6 +2,8 @@ import { pivovar_state } from '@/pivovar_state'
 
 export interface WashMachine {
     name: string
+    phases: [ string ]
+    plot_data: TempLog
 }
 
 export interface TempLog {
