@@ -1,8 +1,8 @@
 import { Vue } from 'vue-property-decorator';
+import { httpget, WashMachine, TempLog } from '@/pivovar_client'
 
 export class PivovarState {
     wm_url = `http://${location.hostname}:5001`
-    wash_machines_names =[ 'wash_machine_1' ]
     wash_machines: { [id: string] : WashMachine } = {};
     alerts = {}
 
@@ -34,38 +34,24 @@ export interface Alert {
     message: string
 }
 
-export interface WashMachine {
-}
-
-export interface TempLog {
-    datetime: string[]
-    temps: number[]
-}
-
-
 export var pivovar_state = new PivovarState()
 
-fetch(pivovar_state.wm_url + '/wash_machine')
-    .then(response => response.json())
-    .catch(error => pivovar_state.addDanger('wm_connect', error))
-    .then(response => {
-        pivovar_state.removeDanger("wm_connect")
-        pivovar_state.updateWashMachine(response.name, response);
-    })
+{
+    (async() => {
+        const url = `${pivovar_state.wm_url}/wash_machine`
+        var res = await httpget(url) as WashMachine
+        pivovar_state.updateWashMachine(res.name, res)
+        update_data()
+    })();
+}
+
 
 
 export function update_data() {
-    pivovar_state.wash_machines_names.forEach(wash_machine_id => {
-        var url = `${pivovar_state.wm_url}/temp_log`
-
-        fetch(url).then(response => response.json())
-        .catch(error =>
-            pivovar_state.addDanger("wm_temp_log", `Error getting ${url}, ${error}`)
-        )
-        .then(function (temp_log: TempLog) {
-            pivovar_state.removeDanger("wm_temp_log");
-            pivovar_state.updateWashMachineTempLog(wash_machine_id, temp_log);
-        })
+    var url = `${pivovar_state.wm_url}/temp_log`
+    Object.values(pivovar_state.wash_machines).forEach(async wash_machine => {
+        var temp_log = await httpget(url) as TempLog
+        pivovar_state.removeDanger("wm_temp_log")
+        pivovar_state.updateWashMachineTempLog(wash_machine.name, temp_log)
     })
 }
-

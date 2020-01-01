@@ -35,14 +35,13 @@ import { Component, Prop, Watch, Vue } from 'vue-property-decorator'
 import Locale from '@/components/Locale.vue'
 import NotifyArea from '@/components/NotifyArea.vue'
 import { update_plot } from '@/components/WashMachine.vue'
-import { pivovar_state, update_data } from '@/pivovar_state'
+import { pivovar_state, PivovarState, update_data } from '@/pivovar_state'
 
 declare global {
     interface Window {
-        Vue: any;
-        wm_components: any;
-        pivovar_state: any;
-        update_plot: any
+        Vue: any
+        update_plot: any  // For debugging
+        pivovar_state: PivovarState
     }
 }
 

@@ -31,12 +31,11 @@
 </template>
 
 <script lang="ts">
-import { TempLog, pivovar_state } from '@/pivovar_state'
+import { pivovar_state } from '@/pivovar_state'
+import { TempLog } from '@/pivovar_client'
 import { Component, Prop, Watch, Vue } from 'vue-property-decorator';
 import WashMachinePhase from '@/components/WashMachinePhase.vue';
 import draggable from 'vuedraggable'
-
-window.wm_components = []
 
 @Component({
     components: {
@@ -45,10 +44,6 @@ window.wm_components = []
     }
 })
 export default class WashMachine extends Vue {
-
-    mounted() {
-        window.wm_components.push(this)
-    }
 
     data () {
         return {
